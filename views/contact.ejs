@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Contact Us | Cookieshop</title>
+  <link rel="stylesheet" href="/styles.css">
+  <style>
+    body {
+      font-family: 'Comic Sans MS', cursive, sans-serif; 
+      margin: 0;
+      padding: 0;
+      background-color: #f8e9d4; 
+    }
+
+    main {
+      padding: 20px;
+      max-width: 800px;
+      margin: 300px auto;
+      background-color: #fff8e7; 
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      border-radius: 12px;
+      border: 2px solid #cfa67e; 
+      text-align: center;
+    }
+
+    h2 {
+      color: #d2691e; 
+    }
+
+    p {
+      font-size: 16px;
+      color: #333;
+      margin: 15px 0;
+    }
+
+    form {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      margin-top: 20px;
+    }
+
+    input[type="text"],
+    input[type="email"],
+    textarea {
+      padding: 10px;
+      border: 1px solid #cfa67e;
+      border-radius: 8px;
+      font-size: 16px;
+      background-color: #fff8e7;
+    }
+
+    button {
+      padding: 10px 20px;
+      background-color: #d2691e; 
+      color: #fff;
+      border: none;
+      border-radius: 8px;
+      font-size: 16px;
+      cursor: pointer;
+      transition: background-color 0.3s;
+    }
+
+    button:hover {
+      background-color: #8b4513; 
+    }
+  </style>
+</head>
+<body>
+  <%- include('partials/header') %>
+  <main>
+    <h2>Contact Us</h2>
+    <p>We'd love to hear from you! Reach out with any questions or feedback.</p>
+    <form action="/contact" method="POST">
+      <input type="text" name="name" placeholder="Your Name" required>
+      <input type="email" name="email" placeholder="Your Email" required>
+      <textarea name="message" placeholder="Your Message" rows="4" required></textarea>
+      <button type="submit">Send Message</button>
+    </form>
+  </main>
+  <%- include('partials/footer') %>
+</body>
+</html>

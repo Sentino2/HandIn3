@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title><%= cookie.name %> | Cookieshop</title>
+  <link rel="stylesheet" href="/styles.css">
+  <style>
+    body {
+      font-family: 'Comic Sans MS', cursive, sans-serif; 
+      margin: 0;
+      padding: 0;
+      background-color: #f8e9d4; 
+    }
+
+    main {
+      padding: 20px;
+      max-width: 800px;
+      margin: 40px auto;
+      background-color: #fff8e7; 
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      border-radius: 12px;
+      border: 2px solid #cfa67e; 
+    }
+
+    h1 {
+      text-align: center;
+      color: #d2691e; 
+    }
+
+    p {
+      font-size: 16px;
+      color: #333;
+      margin: 15px 0;
+    }
+
+    strong {
+      color: #d2691e;
+    }
+
+    .stock-status {
+      font-size: 18px;
+      font-weight: bold;
+      margin-top: 20px;
+    }
+
+    .action-links {
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+      margin-top: 30px;
+    }
+
+    .action-links a {
+      padding: 10px 20px;
+      background-color: #d2691e;
+      color: #fff;
+      text-decoration: none;
+      border-radius: 8px;
+      font-weight: bold;
+      transition: background-color 0.3s;
+    }
+
+    .action-links a:hover {
+      background-color: #8b4513; 
+    }
+  </style>
+</head>
+<body>
+  <%- include('../partials/header') %>
+
+  <main>
+    <h1><%= cookie.name %></h1>
+    <p><%= cookie.description %></p>
+    <p><strong>Price: <%= readablePrice(cookie.priceInCents) %></strong></p>
+    <% if(cookie.isInStock) { %> 
+      <p class="stock-status" style="color: green;">In Stock!</p>
+    <% } else { %>
+      <p class="stock-status" style="color: tomato;">Temporarily sold out!</p>
+    <% } %>
+    <div class="action-links">
+      <a href="/cookies/<%= cookie.slug %>/edit">Edit Cookie</a>
+      <a href="/cookies/<%= cookie.slug %>/delete">Delete Cookie</a>
+    </div>
+  </main>
+
+  <%- include('../partials/footer') %>
+</body>
+</html>

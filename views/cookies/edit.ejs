@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Edit Cookie | Cookieshop</title>
+  <link rel="stylesheet" href="/styles.css">
+  <style>
+    body {
+      font-family: 'Comic Sans MS', cursive, sans-serif; 
+      margin: 0;
+      padding: 0;
+      background-color: #f8e9d4; 
+    }
+
+    main {
+      padding: 20px;
+      max-width: 800px;
+      margin: 300px auto;
+      background-color: #fff8e7; 
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      border-radius: 12px;
+      border: 2px solid #cfa67e; 
+      text-align: center;
+    }
+
+    h2 {
+      color: #d2691e; 
+    }
+
+    form {
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+      align-items: center;
+    }
+
+    input[type="text"],
+    input[type="number"] {
+      padding: 10px;
+      border: 1px solid #cfa67e;
+      border-radius: 8px;
+      font-size: 16px;
+      background-color: #fff8e7;
+      width: 80%;
+    }
+
+    button {
+      padding: 10px 20px;
+      background-color: #d2691e; 
+      color: #fff;
+      border: none;
+      border-radius: 8px;
+      font-size: 16px;
+      cursor: pointer;
+      transition: background-color 0.3s;
+    }
+
+    button:hover {
+      background-color: #8b4513; 
+    }
+  </style>
+</head>
+<body>
+  <%- include('../partials/header') %>
+
+  <main>
+    <h2>Edit a cookie</h2>
+    <form action="/cookies/<%= cookie.slug %>" method="POST">
+      <input type="text" value="<%= cookie.name %>" name="name" placeholder="name" required><br>
+      <input type="text" value="<%= cookie.slug %>" name="slug" placeholder="slug" required><br>
+      <input type="number" value="<%= cookie.priceInCents %>" name="priceInCents" placeholder="price in cents" required><br>
+      <button>Save</button>
+    </form>
+  </main>
+
+  <%- include('../partials/footer') %>
+</body>
+</html>

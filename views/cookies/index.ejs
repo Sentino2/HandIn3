@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Shop | Cookieshop</title>
+  <link rel="stylesheet" href="/styles.css">
+  <style>
+    body {
+      font-family: 'Comic Sans MS', cursive, sans-serif; 
+      margin: 0;
+      padding: 0;
+      background-color: #f8e9d4; 
+    }
+
+    main {
+      padding: 20px;
+      max-width: 800px;
+      margin: 100px auto;
+      background-color: #fff8e7; 
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      border-radius: 12px;
+      border: 2px solid #cfa67e; 
+    }
+
+    h2 {
+      text-align: center;
+      color: #d2691e; 
+    }
+
+    ul {
+      list-style-type: none;
+      padding: 0;
+    }
+
+    li {
+      margin: 20px 0;
+      padding: 10px;
+      background-color: #fff;
+      border-radius: 8px;
+      border: 1px solid #cfa67e;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
+
+    img {
+      width: 100px;
+      height: auto;
+      border-radius: 8px;
+      margin-right: 15px;
+    }
+
+    a {
+      color: #d2691e;
+      text-decoration: none;
+      font-weight: bold;
+      transition: color 0.3s;
+    }
+
+    a:hover {
+      color: #8b4513;
+    }
+
+    .sold-out {
+      color: tomato;
+      font-weight: bold;
+    }
+  </style>
+</head>
+<body>
+  <%- include('../partials/header') %>
+
+  <main>
+    <h2>Our current offering:</h2>
+    <ul>
+      <% cookies.forEach(cookie => { %>
+        <li>
+          <img 
+            src="<%= cookie.slug === 'chocolate-chip' ? '/images/choco.jpg' : cookie.slug === 'banana' ? '/images/banana.jpg' : cookie.slug === 'cinnamon' ? '/images/cinamon.png' : cookie.slug === 'peanut-butter' ? '/images/peanut.png' : '/images/whiteChoco.jpg' %>" 
+            alt="<%= cookie.name %> image">
+          <% if(cookie.isInStock) { %> 
+            <a href="/cookies/<%= cookie.slug %>"><%= cookie.name %>: <%= readablePrice(cookie.priceInCents) %></a>
+          <% } else { %>
+            <span class="sold-out"><%= cookie.name %> [SOLD OUT]</span>
+          <% } %>
+        </li>
+      <% }) %>
+    </ul>
+  </main>
+
+  <%- include('../partials/footer') %>
+</body>
+</html>

@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>New Cookie | Cookieshop</title>
+  <link rel="stylesheet" href="/styles.css">
+  <style>
+    body {
+      font-family: 'Comic Sans MS', cursive, sans-serif; 
+      margin: 0;
+      padding: 0;
+      background-color: #f8e9d4; 
+    }
+
+    main {
+      padding: 20px;
+      margin: 300px auto;
+      max-width: 800px;
+      background-color: #fff8e7; 
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      border-radius: 12px;
+      border: 2px solid #cfa67e; 
+    }
+
+    h2 {
+      text-align: center;
+      color: #d2691e; 
+    }
+
+    form {
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+    }
+
+    input[type="text"],
+    input[type="number"] {
+      padding: 10px;
+      border: 1px solid #cfa67e;
+      border-radius: 8px;
+      font-size: 16px;
+      background-color: #fff8e7;
+    }
+
+    button {
+      padding: 10px 20px;
+      background-color: #d2691e; 
+      color: #fff;
+      border: none;
+      border-radius: 8px;
+      font-size: 16px;
+      cursor: pointer;
+      transition: background-color 0.3s;
+    }
+
+    button:hover {
+      background-color: #8b4513; 
+    }
+  </style>
+</head>
+<body>
+  <%- include('../partials/header') %>
+  <main>
+    <h2>Create a new cookie 🍪</h2>
+    <form action="/cookies" method="POST">
+      <input type="text" name="name" placeholder="name" required /><br />
+      <input type="text" name="slug" placeholder="slug" required /><br />
+      <input type="number" name="priceInCents" placeholder="price in cents" required min="0" step="1" /><br />
+      <button>Save</button>
+    </form>
+  </main>
+  <%- include('../partials/footer') %>
+</body>
+</html>
