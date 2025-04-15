@@ -34,13 +34,18 @@
     }
 
     input[type="text"],
-    input[type="number"] {
+    input[type="number"],
+    select {
       padding: 10px;
       border: 1px solid #cfa67e;
       border-radius: 8px;
       font-size: 16px;
       background-color: #fff8e7;
       width: 80%;
+    }
+
+    select[multiple] {
+      height: 120px;
     }
 
     button {
@@ -57,18 +62,85 @@
     button:hover {
       background-color: #8b4513; 
     }
+
+    .error {
+      color: #ff0000;
+      margin: 5px 0;
+      font-size: 14px;
+    }
+
+    .error-list {
+      list-style: none;
+      padding: 0;
+      margin: 0 0 20px 0;
+    }
+
+    .form-section {
+      width: 80%;
+      text-align: left;
+      margin-bottom: 20px;
+    }
+
+    .form-section h3 {
+      color: #d2691e;
+      margin-bottom: 10px;
+    }
+
+    .price-display {
+      color: #d2691e;
+      font-weight: bold;
+      margin: 10px 0;
+    }
   </style>
 </head>
 <body>
   <%- include('../partials/header') %>
 
   <main>
-    <h2>Edit a cookie</h2>
+    <h2>Edit cookie</h2>
+    
+    <% if (typeof errors !== 'undefined' && errors.length > 0) { %>
+      <ul class="error-list">
+        <% errors.forEach(error => { %>
+          <li class="error"><%= error.msg %></li>
+        <% }) %>
+      </ul>
+    <% } %>
+
     <form action="/cookies/<%= cookie.slug %>" method="POST">
-      <input type="text" value="<%= cookie.name %>" name="name" placeholder="name" required><br>
-      <input type="text" value="<%= cookie.slug %>" name="slug" placeholder="slug" required><br>
-      <input type="number" value="<%= cookie.priceInCents %>" name="priceInCents" placeholder="price in cents" required><br>
-      <button>Save</button>
+      <div class="form-section">
+        <h3>Basic Information</h3>
+        <input type="text" name="name" placeholder="name" value="<%= cookie.name %>" required><br>
+        <input type="text" name="slug" placeholder="slug" value="<%= cookie.slug %>" required><br>
+        <input type="number" name="priceInCents" placeholder="price in cents" value="<%= cookie.priceInCents %>" required><br>
+        <div class="price-display">Current price: <%= formatPrice(cookie.priceInCents) %></div>
+      </div>
+
+      <div class="form-section">
+        <h3>Ingredients</h3>
+        <select name="ingredients" multiple>
+          <option value="sugar" <%= cookie.ingredients.includes('sugar') ? 'selected' : '' %>>sugar</option>
+          <option value="flour" <%= cookie.ingredients.includes('flour') ? 'selected' : '' %>>flour</option>
+          <option value="chocolate" <%= cookie.ingredients.includes('chocolate') ? 'selected' : '' %>>chocolate</option>
+          <option value="berries" <%= cookie.ingredients.includes('berries') ? 'selected' : '' %>>berries</option>
+          <option value="butter" <%= cookie.ingredients.includes('butter') ? 'selected' : '' %>>butter</option>
+          <option value="water" <%= cookie.ingredients.includes('water') ? 'selected' : '' %>>water</option>
+          <option value="eggs" <%= cookie.ingredients.includes('eggs') ? 'selected' : '' %>>eggs</option>
+          <option value="vanilla" <%= cookie.ingredients.includes('vanilla') ? 'selected' : '' %>>vanilla</option>
+          <option value="baking powder" <%= cookie.ingredients.includes('baking powder') ? 'selected' : '' %>>baking powder</option>
+          <option value="salt" <%= cookie.ingredients.includes('salt') ? 'selected' : '' %>>salt</option>
+        </select>
+        <p>Hold Ctrl/Cmd to select multiple ingredients</p>
+      </div>
+
+      <div class="form-section">
+        <h3>Nutrition Facts</h3>
+        <input type="text" name="nutrition[fat]" placeholder="fat content" value="<%= cookie.nutrition ? cookie.nutrition.fat : '' %>"><br>
+        <input type="text" name="nutrition[sugar]" placeholder="sugar content" value="<%= cookie.nutrition ? cookie.nutrition.sugar : '' %>"><br>
+        <input type="text" name="nutrition[salt]" placeholder="salt content" value="<%= cookie.nutrition ? cookie.nutrition.salt : '' %>"><br>
+      </div>
+
+      <button>Update</button>
     </form>
   </main>
 

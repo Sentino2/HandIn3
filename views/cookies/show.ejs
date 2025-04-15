@@ -62,6 +62,52 @@
     .action-links a:hover {
       background-color: #8b4513; 
     }
+
+    .info-section {
+      margin: 20px 0;
+      padding: 15px;
+      background-color: #fff;
+      border-radius: 8px;
+      border: 1px solid #cfa67e;
+    }
+
+    .info-section h2 {
+      color: #d2691e;
+      margin-bottom: 10px;
+    }
+
+    .ingredients-list {
+      list-style-type: none;
+      padding: 0;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    .ingredients-list li {
+      background-color: #f8e9d4;
+      padding: 5px 10px;
+      border-radius: 15px;
+      color: #d2691e;
+    }
+
+    .nutrition-facts {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+      gap: 10px;
+    }
+
+    .nutrition-item {
+      background-color: #f8e9d4;
+      padding: 10px;
+      border-radius: 8px;
+      text-align: center;
+    }
+
+    .nutrition-item strong {
+      display: block;
+      margin-bottom: 5px;
+    }
   </style>
 </head>
 <body>
@@ -76,6 +122,38 @@
     <% } else { %>
       <p class="stock-status" style="color: tomato;">Temporarily sold out!</p>
     <% } %>
+
+    <div class="info-section">
+      <h2>Ingredients</h2>
+      <ul class="ingredients-list">
+        <% if (cookie.ingredients && cookie.ingredients.length > 0) { %>
+          <% cookie.ingredients.forEach(ingredient => { %>
+            <li><%= ingredient %></li>
+          <% }) %>
+        <% } else { %>
+          <li>No ingredients listed</li>
+        <% } %>
+      </ul>
+    </div>
+
+    <div class="info-section">
+      <h2>Nutrition Facts</h2>
+      <div class="nutrition-facts">
+        <div class="nutrition-item">
+          <strong>Fat</strong>
+          <%= cookie.nutrition && cookie.nutrition.fat ? cookie.nutrition.fat : 'N/A' %>
+        </div>
+        <div class="nutrition-item">
+          <strong>Sugar</strong>
+          <%= cookie.nutrition && cookie.nutrition.sugar ? cookie.nutrition.sugar : 'N/A' %>
+        </div>
+        <div class="nutrition-item">
+          <strong>Salt</strong>
+          <%= cookie.nutrition && cookie.nutrition.salt ? cookie.nutrition.salt : 'N/A' %>
+        </div>
+      </div>
+    </div>
+
     <div class="action-links">
       <a href="/cookies/<%= cookie.slug %>/edit">Edit Cookie</a>
       <a href="/cookies/<%= cookie.slug %>/delete">Delete Cookie</a>

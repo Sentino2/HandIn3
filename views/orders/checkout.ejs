@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Checkout | Cookieshop</title>
+  <link rel="stylesheet" href="/styles.css">
+  <style>
+    body {
+      font-family: 'Comic Sans MS', cursive, sans-serif; 
+      margin: 0;
+      padding: 0;
+      background-color: #f8e9d4; 
+    }
+
+    main {
+      padding: 20px;
+      max-width: 800px;
+      margin: 40px auto;
+      background-color: #fff8e7; 
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      border-radius: 12px;
+      border: 2px solid #cfa67e; 
+    }
+
+    h2 {
+      text-align: center;
+      color: #d2691e; 
+    }
+
+    form {
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+    }
+
+    .form-section {
+      margin-bottom: 20px;
+    }
+
+    .form-section h3 {
+      color: #d2691e;
+      margin-bottom: 10px;
+    }
+
+    input[type="text"],
+    input[type="email"],
+    textarea,
+    select {
+      padding: 10px;
+      border: 1px solid #cfa67e;
+      border-radius: 8px;
+      font-size: 16px;
+      background-color: #fff8e7;
+      width: 100%;
+    }
+
+    select[multiple] {
+      height: 120px;
+    }
+
+    button {
+      padding: 10px 20px;
+      background-color: #d2691e;
+      color: #fff;
+      border: none;
+      border-radius: 8px;
+      font-size: 16px;
+      cursor: pointer;
+      transition: background-color 0.3s;
+    }
+
+    button:hover {
+      background-color: #8b4513; 
+    }
+
+    .cookie-list {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+      gap: 15px;
+      margin-top: 15px;
+    }
+
+    .cookie-item {
+      background-color: #fff;
+      padding: 10px;
+      border-radius: 8px;
+      border: 1px solid #cfa67e;
+    }
+
+    .cookie-item input[type="checkbox"] {
+      margin-right: 10px;
+    }
+  </style>
+</head>
+<body>
+  <%- include('../partials/header') %>
+
+  <main>
+    <h2>Checkout</h2>
+    
+    <form action="/orders/checkout" method="POST">
+      <div class="form-section">
+        <h3>Personal Information</h3>
+        <input type="text" name="name" placeholder="Your name" required>
+        <input type="email" name="email" placeholder="Your email" required>
+      </div>
+
+      <div class="form-section">
+        <h3>Delivery Address</h3>
+        <input type="text" name="street" placeholder="Street & number" required>
+        <input type="text" name="city" placeholder="City" required>
+        <input type="text" name="zip" placeholder="ZIP code" required>
+        <input type="text" name="state" placeholder="State" required>
+        <input type="text" name="country" placeholder="Country" required>
+      </div>
+
+      <div class="form-section">
+        <h3>Select Cookies</h3>
+        <div class="cookie-list">
+          <% cookies.forEach(cookie => { %>
+            <div class="cookie-item">
+              <input type="checkbox" name="cookies" value="<%= cookie._id %>" id="cookie-<%= cookie._id %>">
+              <label for="cookie-<%= cookie._id %>">
+                <%= cookie.name %> - <%= readablePrice(cookie.priceInCents) %>
+              </label>
+            </div>
+          <% }) %>
+        </div>
+      </div>
+
+      <div class="form-section">
+        <h3>Additional Message</h3>
+        <textarea name="message" placeholder="Any special instructions?"></textarea>
+      </div>
+
+      <button type="submit">Place Order</button>
+    </form>
+  </main>
+
+  <%- include('../partials/footer') %>
+</body>
+</html> 

@@ -13,16 +13,16 @@
 
     main {
       padding: 20px;
-      margin: 300px auto;
       max-width: 800px;
+      margin: 300px auto;
       background-color: #fff8e7; 
       box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
       border-radius: 12px;
       border: 2px solid #cfa67e; 
+      text-align: center;
     }
 
     h2 {
-      text-align: center;
       color: #d2691e; 
     }
 
@@ -30,15 +30,22 @@
       display: flex;
       flex-direction: column;
       gap: 15px;
+      align-items: center;
     }
 
     input[type="text"],
-    input[type="number"] {
+    input[type="number"],
+    select {
       padding: 10px;
       border: 1px solid #cfa67e;
       border-radius: 8px;
       font-size: 16px;
       background-color: #fff8e7;
+      width: 80%;
+    }
+
+    select[multiple] {
+      height: 120px;
     }
 
     button {
@@ -55,19 +62,81 @@
     button:hover {
       background-color: #8b4513; 
     }
+
+    .error {
+      color: #ff0000;
+      margin: 5px 0;
+      font-size: 14px;
+    }
+
+    .error-list {
+      list-style: none;
+      padding: 0;
+      margin: 0 0 20px 0;
+    }
+
+    .form-section {
+      width: 80%;
+      text-align: left;
+      margin-bottom: 20px;
+    }
+
+    .form-section h3 {
+      color: #d2691e;
+      margin-bottom: 10px;
+    }
   </style>
 </head>
 <body>
   <%- include('../partials/header') %>
+
   <main>
-    <h2>Create a new cookie 🍪</h2>
+    <h2>Create a new cookie</h2>
+    
+    <% if (typeof errors !== 'undefined' && errors.length > 0) { %>
+      <ul class="error-list">
+        <% errors.forEach(error => { %>
+          <li class="error"><%= error.msg %></li>
+        <% }) %>
+      </ul>
+    <% } %>
+
     <form action="/cookies" method="POST">
-      <input type="text" name="name" placeholder="name" required /><br />
-      <input type="text" name="slug" placeholder="slug" required /><br />
-      <input type="number" name="priceInCents" placeholder="price in cents" required min="0" step="1" /><br />
-      <button>Save</button>
+      <div class="form-section">
+        <h3>Basic Information</h3>
+        <input type="text" name="name" placeholder="name" value="<%= typeof cookie !== 'undefined' ? cookie.name : '' %>" required><br>
+        <input type="text" name="slug" placeholder="slug" value="<%= typeof cookie !== 'undefined' ? cookie.slug : '' %>" required><br>
+        <input type="number" name="priceInCents" placeholder="price in cents" value="<%= typeof cookie !== 'undefined' ? cookie.priceInCents : '' %>" required><br>
+      </div>
+
+      <div class="form-section">
+        <h3>Ingredients</h3>
+        <select name="ingredients" multiple>
+          <option value="sugar">sugar</option>
+          <option value="flour">flour</option>
+          <option value="chocolate">chocolate</option>
+          <option value="berries">berries</option>
+          <option value="butter">butter</option>
+          <option value="water">water</option>
+          <option value="eggs">eggs</option>
+          <option value="vanilla">vanilla</option>
+          <option value="baking powder">baking powder</option>
+          <option value="salt">salt</option>
+        </select>
+        <p>Hold Ctrl/Cmd to select multiple ingredients</p>
+      </div>
+
+      <div class="form-section">
+        <h3>Nutrition Facts</h3>
+        <input type="text" name="nutrition[fat]" placeholder="fat content" value="<%= typeof cookie !== 'undefined' && cookie.nutrition ? cookie.nutrition.fat : '' %>"><br>
+        <input type="text" name="nutrition[sugar]" placeholder="sugar content" value="<%= typeof cookie !== 'undefined' && cookie.nutrition ? cookie.nutrition.sugar : '' %>"><br>
+        <input type="text" name="nutrition[salt]" placeholder="salt content" value="<%= typeof cookie !== 'undefined' && cookie.nutrition ? cookie.nutrition.salt : '' %>"><br>
+      </div>
+
+      <button>Create</button>
     </form>
   </main>
+
   <%- include('../partials/footer') %>
 </body>
 </html>

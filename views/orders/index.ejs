@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Orders | Cookieshop</title>
+  <link rel="stylesheet" href="/styles.css">
+  <style>
+    body {
+      font-family: 'Comic Sans MS', cursive, sans-serif; 
+      margin: 0;
+      padding: 0;
+      background-color: #f8e9d4; 
+    }
+
+    main {
+      padding: 20px;
+      max-width: 800px;
+      margin: 40px auto;
+      background-color: #fff8e7; 
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      border-radius: 12px;
+      border: 2px solid #cfa67e; 
+    }
+
+    h2 {
+      text-align: center;
+      color: #d2691e; 
+    }
+
+    .order-list {
+      list-style: none;
+      padding: 0;
+    }
+
+    .order-item {
+      background-color: #fff;
+      padding: 20px;
+      margin-bottom: 20px;
+      border-radius: 8px;
+      border: 1px solid #cfa67e;
+    }
+
+    .order-header {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 15px;
+    }
+
+    .order-status {
+      padding: 5px 10px;
+      border-radius: 15px;
+      font-weight: bold;
+    }
+
+    .status-pending {
+      background-color: #fff3cd;
+      color: #856404;
+    }
+
+    .status-processing {
+      background-color: #cce5ff;
+      color: #004085;
+    }
+
+    .status-completed {
+      background-color: #d4edda;
+      color: #155724;
+    }
+
+    .status-cancelled {
+      background-color: #f8d7da;
+      color: #721c24;
+    }
+
+    .customer-info {
+      margin-bottom: 15px;
+    }
+
+    .cookie-list {
+      list-style: none;
+      padding: 0;
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+      gap: 10px;
+      margin-top: 10px;
+    }
+
+    .cookie-item {
+      background-color: #f8e9d4;
+      padding: 10px;
+      border-radius: 8px;
+      text-align: center;
+    }
+
+    .message {
+      margin-top: 15px;
+      padding: 10px;
+      background-color: #f8f9fa;
+      border-radius: 8px;
+      font-style: italic;
+    }
+  </style>
+</head>
+<body>
+  <%- include('../partials/header') %>
+
+  <main>
+    <h2>All Orders</h2>
+    
+    <ul class="order-list">
+      <% orders.forEach(order => { %>
+        <li class="order-item">
+          <div class="order-header">
+            <div class="customer-info">
+              <strong><%= order.user.name %></strong> (<%= order.user.email %>)
+              <div>
+                <%= order.user.address.street %>, <%= order.user.address.city %>, 
+                <%= order.user.address.state %> <%= order.user.address.zip %>, 
+                <%= order.user.address.country %>
+              </div>
+            </div>
+            <div class="order-status status-<%= order.status %>">
+              <%= order.status %>
+            </div>
+          </div>
+
+          <div class="cookie-list">
+            <% order.cookies.forEach(cookie => { %>
+              <div class="cookie-item">
+                <%= cookie.name %> - <%= readablePrice(cookie.priceInCents) %>
+              </div>
+            <% }) %>
+          </div>
+
+          <% if (order.message) { %>
+            <div class="message">
+              <strong>Note:</strong> <%= order.message %>
+            </div>
+          <% } %>
+        </li>
+      <% }) %>
+    </ul>
+  </main>
+
+  <%- include('../partials/footer') %>
+</body>
+</html> 
