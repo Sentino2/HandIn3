@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Error | Cookieshop</title>
+  <link rel="stylesheet" href="/styles.css">
+  <style>
+    .error-container {
+      padding: 20px;
+      max-width: 800px;
+      margin: 20px auto;
+      background-color: #fff8e7;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      border-radius: 12px;
+      border: 2px solid #cfa67e;
+      text-align: center;
+    }
+
+    .error-message {
+      color: #d2691e;
+      margin: 20px 0;
+    }
+
+    .error-details {
+      background-color: #fff;
+      padding: 15px;
+      border-radius: 8px;
+      margin: 20px 0;
+      text-align: left;
+      font-family: monospace;
+      white-space: pre-wrap;
+    }
+
+    .back-link {
+      display: inline-block;
+      padding: 10px 20px;
+      background-color: #d2691e;
+      color: #fff;
+      text-decoration: none;
+      border-radius: 8px;
+      margin-top: 20px;
+    }
+
+    .back-link:hover {
+      background-color: #8b4513;
+    }
+  </style>
+</head>
+<body>
+  <%- include('./partials/header') %>
+
+  <main class="error-container">
+    <h1 class="error-message"><%= message %></h1>
+    <% if (error && error.stack && process.env.NODE_ENV !== 'production') { %>
+      <div class="error-details">
+        <%= error.stack %>
+      </div>
+    <% } %>
+    <a href="/" class="back-link">Back to Home</a>
+  </main>
+
+  <%- include('./partials/footer') %>
+</body>
+</html> 
